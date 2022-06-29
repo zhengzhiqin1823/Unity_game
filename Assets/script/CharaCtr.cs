@@ -127,8 +127,9 @@ public class CharaCtr : MonoBehaviour
                 reload = false;
             }
         }
-        cc.Move(new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"))*Time.deltaTime*speed);
-        if(Input.GetMouseButton(1))
+        cc.Move(transform.forward * Time.deltaTime * Input.GetAxis("Vertical") * speed);
+        cc.Move(transform.right * Time.deltaTime * Input.GetAxis("Horizontal") * speed);
+        if (Input.GetMouseButton(1))
         {
             this.transform.Rotate(new Vector3(0, Input.GetAxis("Mouse X")*mousesense, 0));
         }
