@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class CharaCtr : MonoBehaviour
 {
     private Animator ani;
@@ -21,6 +21,7 @@ public class CharaCtr : MonoBehaviour
     public int maxreloadtime;
     public int buttlenum;
     public int maxbuttlenum;
+    public Image bul;
     //控制移动
     private bool move;//前后移动
     private bool movex;//左右移动
@@ -36,6 +37,7 @@ public class CharaCtr : MonoBehaviour
     public int health;
     private bool die;
     private bool ret;
+    public Image hp;
     //设置子弹
     public GameObject bullet;
     public GameObject aim1;
@@ -49,7 +51,7 @@ public class CharaCtr : MonoBehaviour
         shoot = false;
         shootDelayr = false;
         jump = false;
-        maxjumptime = 220;
+        maxjumptime = 350;
         jumptimer = 0;
         reload = false;
         reloadtimer = 0;
@@ -67,14 +69,15 @@ public class CharaCtr : MonoBehaviour
         main.transform.SetParent(this.transform);
         main.transform.position = this.transform.position + offset;
         mousesense = 2f;
-        maxfiretime = 100;
+        maxfiretime = 70;
         firetime = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(die||ret)
+        bulletImgChange(5);
+        if (die||ret)
         {
             if(die)
             {
@@ -129,7 +132,7 @@ public class CharaCtr : MonoBehaviour
         }
         cc.Move(transform.forward * Time.deltaTime * Input.GetAxis("Vertical") * speed);
         cc.Move(transform.right * Time.deltaTime * Input.GetAxis("Horizontal") * speed);
-        if (Input.GetMouseButton(1))
+        if (Input.GetMouseButton(1)|| Input.GetMouseButton(0))
         {
             this.transform.Rotate(new Vector3(0, Input.GetAxis("Mouse X")*mousesense, 0));
         }
@@ -243,6 +246,18 @@ public class CharaCtr : MonoBehaviour
         shootDelayr = true; 
         yield return new WaitForSeconds(0.7f);
         shoot = false; 
+    }
+
+    void bulletImgChange(int speed)
+    {
+        float radio = (float)buttlenum / maxbuttlenum;
+        bul.fillAmount=Mathf.Lerp(bul.fillAmount,radio,Time.deltaTime*speed);
+    }
+
+    void hpImgChange()
+    {
+        float radio = (float)health / maxhealth;
+        hp.fillAmount = Mathf.Lerp(hp.fillAmount, radio, Time.deltaTime * 3);
     }
 
 }

@@ -939,7 +939,7 @@ GameObject:
   - component: {fileID: 1831398691477272204}
   - component: {fileID: 1831398692663806217}
   - component: {fileID: 8293339783631616348}
-  - component: {fileID: 875970530}
+  - component: {fileID: 4540752585045788754}
   m_Layer: 0
   m_Name: HPCharacter
   m_TagString: Player
@@ -1005,7 +1005,7 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &875970530
+--- !u!114 &4540752585045788754
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1023,10 +1023,12 @@ MonoBehaviour:
   maxreloadtime: 0
   buttlenum: 0
   maxbuttlenum: 0
+  bul: {fileID: 0}
   speed: 0
   mousesense: 0
   offset: {x: 0, y: 0, z: 0}
   health: 0
+  hp: {fileID: 0}
   bullet: {fileID: 8228889058242913313, guid: b49fc4358efa32e4f977f580e90cc250, type: 3}
   aim1: {fileID: 22392478}
   maxfiretime: 0
