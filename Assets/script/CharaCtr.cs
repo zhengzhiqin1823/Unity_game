@@ -51,7 +51,7 @@ public class CharaCtr : MonoBehaviour
         shoot = false;
         shootDelayr = false;
         jump = false;
-        maxjumptime = 350;
+        maxjumptime = 280;
         jumptimer = 0;
         reload = false;
         reloadtimer = 0;
@@ -97,7 +97,6 @@ public class CharaCtr : MonoBehaviour
             }
             else
             {
-                Debug.Log("jump");
                 cc.Move(transform.up*Time.deltaTime);
             }
         }
