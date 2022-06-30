@@ -32,6 +32,7 @@ public class CharaCtr : MonoBehaviour
     //相机
     private Camera main;
     public Vector3 offset;
+    public Image type;
     //生命值
     private int maxhealth;
     public int health;
@@ -39,7 +40,11 @@ public class CharaCtr : MonoBehaviour
     private bool ret;
     public Image hp;
     //设置子弹
-    public GameObject bullet;
+    public GameObject bullet1;
+    public GameObject bullet2;
+    public GameObject bullet3;
+    public GameObject bullet4;
+    public int bulOp;//1-4表达子弹1-4；
     public GameObject aim1;
     public int maxfiretime;
     public int firetime;//动画与生成子弹之间的延迟
@@ -71,6 +76,7 @@ public class CharaCtr : MonoBehaviour
         mousesense = 2f;
         maxfiretime = 70;
         firetime = 0;
+        bulOp = 1;
     }
 
     // Update is called once per frame
@@ -86,6 +92,7 @@ public class CharaCtr : MonoBehaviour
             }
             return;
         }
+        typeChange();
         listener();
         ani.SetBool("jump", jump);
         if (jump)
@@ -111,12 +118,54 @@ public class CharaCtr : MonoBehaviour
         if (shoot&&!reload)
         {
             firetime++;
-            if(buttlenum%12==0&&firetime>maxfiretime)
+            switch(bulOp)
             {
-                var b = Instantiate(bullet);
-                b.transform.position=aim1.transform.position;
-                b.GetComponent<Rigidbody>().velocity = transform.forward*30;
+                case 1:
+                    {
+                        if (buttlenum % 40 == 0 && firetime > maxfiretime)
+                        {
+                            var b = Instantiate(bullet1);
+                            b.transform.position = aim1.transform.position;
+                            b.transform.rotation = this.transform.rotation;
+                            b.GetComponent<Rigidbody>().velocity = transform.forward * 30;
+                        }
+                        break;
+                    }
+                    case 2:
+                    {
+                        if (buttlenum % 40 == 0 && firetime > maxfiretime)
+                        {
+                            var b = Instantiate(bullet2);
+                            b.transform.position = aim1.transform.position;
+                            b.transform.rotation = this.transform.rotation;
+                            b.GetComponent<Rigidbody>().velocity = transform.forward * 30;
+                        }
+                        break;
+                    }
+                case 3:
+                    {
+                        if (buttlenum % 40 == 0 && firetime > maxfiretime)
+                        {
+                            var b = Instantiate(bullet3);
+                            b.transform.position = aim1.transform.position;
+                            b.transform.rotation = this.transform.rotation;
+                            b.GetComponent<Rigidbody>().velocity = transform.forward * 30;
+                        }
+                        break;
+                    }
+                case 4:
+                    {
+                        if (buttlenum % 40 == 0 && firetime > maxfiretime)
+                        {
+                            var b = Instantiate(bullet4);
+                            b.transform.position = aim1.transform.position;
+                            b.transform.rotation = this.transform.rotation;
+                            b.GetComponent<Rigidbody>().velocity = transform.forward * 30;
+                        }
+                        break;
+                    }
             }
+            
             buttlenum--;
         }
         if(reload)
@@ -258,5 +307,42 @@ public class CharaCtr : MonoBehaviour
         float radio = (float)health / maxhealth;
         hp.fillAmount = Mathf.Lerp(hp.fillAmount, radio, Time.deltaTime * 3);
     }
-
+    public void changeBul(int amount)
+    {
+        this.bulOp = amount;
+    }
+    private void typeChange()
+    {
+        string img1 = "img/Icon36";//黄色
+        string img2 = "img/Icon35";//绿色
+        string img3 = "img/Icon37";//蓝色
+        string img4 = "img/Icon29";//紫色
+        switch (bulOp)
+        {
+            case 1:
+                {
+                    Sprite s=Resources.Load(img1, typeof(Sprite)) as Sprite;
+                    type.sprite=s;
+                    break;
+                }
+            case 2:
+                {
+                    Sprite s = Resources.Load(img2, typeof(Sprite)) as Sprite;
+                    type.sprite = s;
+                    break;
+                }
+            case 3:
+                {
+                    Sprite s = Resources.Load(img3, typeof(Sprite)) as Sprite;
+                    type.sprite = s;
+                    break;
+                }
+            case 4:
+                {
+                    Sprite s = Resources.Load(img4, typeof(Sprite)) as Sprite;
+                    type.sprite = s;
+                    break;
+                }
+        }
+    }
 }
