@@ -33,6 +33,7 @@ public class CharaCtr : MonoBehaviour
     private Camera main;
     public Vector3 offset;
     public Image type;
+    
     //生命值
     private int maxhealth;
     public int health;
@@ -48,6 +49,7 @@ public class CharaCtr : MonoBehaviour
     public GameObject aim1;
     public int maxfiretime;
     public int firetime;//动画与生成子弹之间的延迟
+    public float anglelimit = 20;
     void Start()
     {
         cc= GetComponent<CharacterController>();
@@ -56,7 +58,7 @@ public class CharaCtr : MonoBehaviour
         shoot = false;
         shootDelayr = false;
         jump = false;
-        maxjumptime = 280;
+        maxjumptime = 30;
         jumptimer = 0;
         reload = false;
         reloadtimer = 0;
@@ -82,6 +84,8 @@ public class CharaCtr : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+      
+
         bulletImgChange(5);
         if (die||ret)
         {
@@ -122,7 +126,7 @@ public class CharaCtr : MonoBehaviour
             {
                 case 1:
                     {
-                        if (buttlenum % 40 == 0 && firetime > maxfiretime)
+                        if (buttlenum % 10 == 0 && firetime > maxfiretime)
                         {
                             var b = Instantiate(bullet1);
                             b.transform.position = aim1.transform.position;
@@ -180,10 +184,34 @@ public class CharaCtr : MonoBehaviour
         }
         cc.Move(transform.forward * Time.deltaTime * Input.GetAxis("Vertical") * speed);
         cc.Move(transform.right * Time.deltaTime * Input.GetAxis("Horizontal") * speed);
-        if (Input.GetMouseButton(1)|| Input.GetMouseButton(0))
+   
+            this.transform.Rotate(new Vector3(0, Input.GetAxis("Mouse X") * mousesense, 0));
+            float MoveY = Input.GetAxis("Mouse Y");
+            Debug.Log("MoveY" + MoveY);
+            Debug.Log("angle:" + this.transform.rotation.eulerAngles.x);
+           
+        if (this.transform.rotation.eulerAngles.x < anglelimit || this.transform.rotation.eulerAngles.x > 360-anglelimit)
         {
-            this.transform.Rotate(new Vector3(0, Input.GetAxis("Mouse X")*mousesense, 0));
+            Vector3 v = new Vector3(MoveY, 0, 0);
+            this.transform.Rotate(v, Space.Self);
+
+            if (!(this.transform.rotation.eulerAngles.x < anglelimit || this.transform.rotation.eulerAngles.x > 360-anglelimit))
+            {
+          
+                this.transform.Rotate(new Vector3(-MoveY, 0, 0), Space.Self);
+
+
+
+            }
+
+
+
         }
+
+
+
+
+
         ani.SetBool("move", move);
         ani.SetBool("movex", movex);
         ani.SetBool("run", run);
