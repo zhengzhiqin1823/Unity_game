@@ -74,7 +74,7 @@ public class CharaCtr : MonoBehaviour
         ret = false;
         offset = new Vector3(-0.01159334f, 2.32391f, -1.147557f);
         main.transform.SetParent(this.transform);
-        main.transform.position = this.transform.position + offset;
+        main.transform.position =  this.transform.position+offset;
         mousesense = 2f;
         maxfiretime = 70;
         firetime = 0;
@@ -84,8 +84,6 @@ public class CharaCtr : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      
-
         bulletImgChange(5);
         if (die||ret)
         {
@@ -184,12 +182,9 @@ public class CharaCtr : MonoBehaviour
         }
         cc.Move(transform.forward * Time.deltaTime * Input.GetAxis("Vertical") * speed);
         cc.Move(transform.right * Time.deltaTime * Input.GetAxis("Horizontal") * speed);
-   
-            this.transform.Rotate(new Vector3(0, Input.GetAxis("Mouse X") * mousesense, 0));
-            float MoveY = Input.GetAxis("Mouse Y");
-            Debug.Log("MoveY" + MoveY);
-            Debug.Log("angle:" + this.transform.rotation.eulerAngles.x);
-           
+        this.transform.Rotate(new Vector3(0, Input.GetAxis("Mouse X") * mousesense, 0));
+        
+         float MoveY = Input.GetAxis("Mouse Y");
         if (this.transform.rotation.eulerAngles.x < anglelimit || this.transform.rotation.eulerAngles.x > 360-anglelimit)
         {
             Vector3 v = new Vector3(MoveY, 0, 0);
@@ -197,21 +192,10 @@ public class CharaCtr : MonoBehaviour
 
             if (!(this.transform.rotation.eulerAngles.x < anglelimit || this.transform.rotation.eulerAngles.x > 360-anglelimit))
             {
-          
                 this.transform.Rotate(new Vector3(-MoveY, 0, 0), Space.Self);
-
-
-
             }
-
-
-
         }
-
-
-
-
-
+         
         ani.SetBool("move", move);
         ani.SetBool("movex", movex);
         ani.SetBool("run", run);
