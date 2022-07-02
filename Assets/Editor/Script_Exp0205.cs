@@ -52,7 +52,6 @@ public class Script_Exp0205 : UnityEditor.AssetModificationProcessor
 	public static bool IsOpenForEdit(string assetPath, out string message)
 	{
 		message = null;
-		Debug.LogFormat("assetPath : {0} ", assetPath);
 		//true表示该资源可以打开，false表示不允许在unity中打开该资源
 		return false;
 	}

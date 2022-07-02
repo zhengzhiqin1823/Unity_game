@@ -40,6 +40,9 @@ public class CharaCtr : MonoBehaviour
     private bool die;
     private bool ret;
     public Image hp;
+    public int hpdelay;
+    public int maxhpdelay;//控制无敌时间
+    private bool isinvicible;
     //设置子弹
     public GameObject bullet1;
     public GameObject bullet2;
@@ -65,7 +68,7 @@ public class CharaCtr : MonoBehaviour
         maxreloadtime = 400;
         buttlenum = 800;
         maxbuttlenum = 800;
-        speed = 2f;
+        speed = 4f;
         run = false;
         main = Camera.main;
         maxhealth = 100;
@@ -79,12 +82,14 @@ public class CharaCtr : MonoBehaviour
         maxfiretime = 70;
         firetime = 0;
         bulOp = 1;
+        isinvicible = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         bulletImgChange(5);
+        hpImgChange();
         if (die||ret)
         {
             if(die)
@@ -127,9 +132,10 @@ public class CharaCtr : MonoBehaviour
                         if (buttlenum % 10 == 0 && firetime > maxfiretime)
                         {
                             var b = Instantiate(bullet1);
+                            b.GetComponentInChildren<bulletDamage>().damage = 10;
                             b.transform.position = aim1.transform.position;
                             b.transform.rotation = this.transform.rotation;
-                            b.GetComponent<Rigidbody>().velocity = transform.forward * 30;
+                            b.GetComponent<Rigidbody>().velocity = transform.forward * 50;
                         }
                         break;
                     }
@@ -138,10 +144,12 @@ public class CharaCtr : MonoBehaviour
                         if (buttlenum % 40 == 0 && firetime > maxfiretime)
                         {
                             var b = Instantiate(bullet2);
+                            b.GetComponentInChildren<bulletDamage>().damage = 5;
                             b.transform.position = aim1.transform.position;
                             b.transform.rotation = this.transform.rotation;
-                            b.GetComponent<Rigidbody>().velocity = transform.forward * 30;
+                            b.GetComponent<Rigidbody>().velocity = transform.forward * 50;
                         }
+
                         break;
                     }
                 case 3:
@@ -149,9 +157,10 @@ public class CharaCtr : MonoBehaviour
                         if (buttlenum % 40 == 0 && firetime > maxfiretime)
                         {
                             var b = Instantiate(bullet3);
+                            b.GetComponentInChildren<bulletDamage>().damage = 10;
                             b.transform.position = aim1.transform.position;
                             b.transform.rotation = this.transform.rotation;
-                            b.GetComponent<Rigidbody>().velocity = transform.forward * 30;
+                            b.GetComponent<Rigidbody>().velocity = transform.forward * 10;
                         }
                         break;
                     }
@@ -161,13 +170,13 @@ public class CharaCtr : MonoBehaviour
                         {
                             var b = Instantiate(bullet4);
                             b.transform.position = aim1.transform.position;
+                            b.GetComponentInChildren<bulletDamage>().damage = 30;
                             b.transform.rotation = this.transform.rotation;
-                            b.GetComponent<Rigidbody>().velocity = transform.forward * 30;
+                            b.GetComponent<Rigidbody>().velocity = transform.forward * 10;
                         }
                         break;
                     }
             }
-            
             buttlenum--;
         }
         if(reload)
@@ -182,9 +191,10 @@ public class CharaCtr : MonoBehaviour
         }
         cc.Move(transform.forward * Time.deltaTime * Input.GetAxis("Vertical") * speed);
         cc.Move(transform.right * Time.deltaTime * Input.GetAxis("Horizontal") * speed);
+        if(Input.GetMouseButton(0)||Input.GetMouseButton(1))
         this.transform.Rotate(new Vector3(0, Input.GetAxis("Mouse X") * mousesense, 0));
-        
-         float MoveY = Input.GetAxis("Mouse Y");
+        /*
+         * float MoveY = Input.GetAxis("Mouse Y");
         if (this.transform.rotation.eulerAngles.x < anglelimit || this.transform.rotation.eulerAngles.x > 360-anglelimit)
         {
             Vector3 v = new Vector3(MoveY, 0, 0);
@@ -196,15 +206,24 @@ public class CharaCtr : MonoBehaviour
             }
         }
          
+         */
+
         ani.SetBool("move", move);
         ani.SetBool("movex", movex);
         ani.SetBool("run", run);
+        if(isinvicible)
+        {
+            hpdelay++;
+            if(hpdelay>maxhpdelay)
+            {
+                isinvicible = false;
+            }
+        }
     }
     private void listener()
     {
         if(health<=0&&!ret)
         {
-            Debug.Log("into");
             die = true;
             ret = true;
         }
@@ -317,7 +336,7 @@ public class CharaCtr : MonoBehaviour
     void hpImgChange()
     {
         float radio = (float)health / maxhealth;
-        hp.fillAmount = Mathf.Lerp(hp.fillAmount, radio, Time.deltaTime * 3);
+        hp.fillAmount = Mathf.Lerp(hp.fillAmount, radio, Time.deltaTime * speed);
     }
     public void changeBul(int amount)
     {
@@ -356,5 +375,16 @@ public class CharaCtr : MonoBehaviour
                     break;
                 }
         }
+    }
+    public void healthChange(int amount)
+    {
+        if (isinvicible) return;
+        else
+        {
+            isinvicible = true;
+            hpdelay = 0;
+        }
+        health=Mathf.Clamp(health+amount, 0, maxhealth);
+        hpImgChange();
     }
 }
