@@ -164,8 +164,8 @@ namespace Unity.FPS.Gameplay
            
             return true;
         }
-
-        void OnHit(Vector3 point, Vector3 normal, Collider collider)
+        
+          void OnHit(Vector3 point, Vector3 normal, Collider collider)
         {
             // impact vfx
             if (ImpactVfx)
@@ -187,6 +187,9 @@ namespace Unity.FPS.Gameplay
             // Self Destruct
             Destroy(this.gameObject);
         }
+         
+
+
 
         void OnDrawGizmosSelected()
         {
@@ -194,4 +197,5 @@ namespace Unity.FPS.Gameplay
             Gizmos.DrawSphere(transform.position, Radius);
         }
     }
+    
 }

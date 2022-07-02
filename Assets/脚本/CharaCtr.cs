@@ -132,7 +132,7 @@ public class CharaCtr : MonoBehaviour
                         if (buttlenum % 10 == 0 && firetime > maxfiretime)
                         {
                             var b = Instantiate(bullet1);
-                            b.GetComponentInChildren<bulletDamage>().damage = 10;
+                            b.GetComponent<bulletDamage>().damage = 10;
                             b.transform.position = aim1.transform.position;
                             b.transform.rotation = this.transform.rotation;
                             b.GetComponent<Rigidbody>().velocity = transform.forward * 50;
@@ -144,7 +144,7 @@ public class CharaCtr : MonoBehaviour
                         if (buttlenum % 40 == 0 && firetime > maxfiretime)
                         {
                             var b = Instantiate(bullet2);
-                            b.GetComponentInChildren<bulletDamage>().damage = 5;
+                            b.GetComponent<bulletDamage>().damage = 5;
                             b.transform.position = aim1.transform.position;
                             b.transform.rotation = this.transform.rotation;
                             b.GetComponent<Rigidbody>().velocity = transform.forward * 50;
@@ -157,7 +157,7 @@ public class CharaCtr : MonoBehaviour
                         if (buttlenum % 40 == 0 && firetime > maxfiretime)
                         {
                             var b = Instantiate(bullet3);
-                            b.GetComponentInChildren<bulletDamage>().damage = 10;
+                            b.GetComponent<bulletDamage>().damage = 10;
                             b.transform.position = aim1.transform.position;
                             b.transform.rotation = this.transform.rotation;
                             b.GetComponent<Rigidbody>().velocity = transform.forward * 10;
@@ -166,11 +166,11 @@ public class CharaCtr : MonoBehaviour
                     }
                 case 4:
                     {
-                        if (buttlenum % 40 == 0 && firetime > maxfiretime)
+                        if (buttlenum % 100 == 0 && firetime > maxfiretime)
                         {
                             var b = Instantiate(bullet4);
                             b.transform.position = aim1.transform.position;
-                            b.GetComponentInChildren<bulletDamage>().damage = 30;
+                            b.GetComponent<bulletDamage>().damage = 30;
                             b.transform.rotation = this.transform.rotation;
                             b.GetComponent<Rigidbody>().velocity = transform.forward * 10;
                         }
@@ -378,6 +378,7 @@ public class CharaCtr : MonoBehaviour
     }
     public void healthChange(int amount)
     {
+        Debug.Log("ok");
         if (isinvicible) return;
         else
         {
