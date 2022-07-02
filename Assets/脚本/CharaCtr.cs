@@ -30,7 +30,7 @@ public class CharaCtr : MonoBehaviour
     private bool run;
     public float mousesense;
     //Па»ъ
-    private Camera main;
+    public Camera main;
     public Vector3 offset;
     public Image type;
     
@@ -70,14 +70,14 @@ public class CharaCtr : MonoBehaviour
         maxbuttlenum = 800;
         speed = 4f;
         run = false;
-        main = Camera.main;
+        
         maxhealth = 100;
         health = maxhealth;
         die = false;
         ret = false;
         offset = new Vector3(-0.01159334f, 2.32391f, -1.147557f);
         main.transform.SetParent(this.transform);
-        main.transform.position =  this.transform.position+offset;
+        main.transform.position =  this.transform.position + offset;
         mousesense = 2f;
         maxfiretime = 70;
         firetime = 0;
