@@ -70,7 +70,7 @@ public class CharaCtr : MonoBehaviour
         maxbuttlenum = 800;
         speed = 4f;
         run = false;
-        
+        main=Camera.main;
         maxhealth = 100;
         health = maxhealth;
         die = false;
@@ -116,7 +116,7 @@ public class CharaCtr : MonoBehaviour
         }
         if(!cc.isGrounded)
         {
-            cc.Move(transform.up * -1 * Time.deltaTime);
+            cc.Move(transform.up * -10 * Time.deltaTime);
         }
         ani.SetBool("isauto", auto);
         ani.SetBool("shoot", shoot);
